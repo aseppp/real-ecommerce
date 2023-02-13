@@ -1,10 +1,13 @@
-datasource db {
-  provider = "postgresql"
-  url      = env("DATABASE_URL")
-}
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
 
 generator client {
   provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
 }
 
 model Account {
@@ -34,7 +37,7 @@ model Session {
 }
 
 model User {
-  id            String     @id @default(cuid())
+  id            String     @id @unique @default(cuid())
   name          String?
   email         String?    @unique
   password      String?
@@ -55,22 +58,29 @@ model VerificationToken {
 }
 
 model Products {
-  id              String @id @default(cuid())
+  id              String      @id @default(cuid())
   authorId        String
-  author          User   @relation(fields: [authorId], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  product_name    String
+  author          User        @relation(fields: [authorId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  product_name    String      @unique
   product_price   String
   product_image   String
-  product_rating  String
+  product_rating  String?
   product_stock   String
-  product_variant String
-  cart            Cart[]
+  product_variant String[]
+  cartItems       CartItems[]
 }
 
 model Cart {
-  id        String   @id @default(cuid())
+  id        String      @id @default(cuid())
   userId    String
-  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  user      User        @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  cartItems CartItems[]
+}
+
+model CartItems {
+  id        String   @id @default(cuid())
+  cartId    String
+  cart      Cart     @relation(fields: [cartId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   productId String
   product   Products @relation(fields: [productId], references: [id], onDelete: Cascade, onUpdate: Cascade)
 }
