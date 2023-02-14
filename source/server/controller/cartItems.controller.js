@@ -26,3 +26,28 @@ exports.addItemToCart = async (req, res) => {
     });
   }
 };
+
+exports.deleteCartItems = async (req, res) => {
+  const { id } = req.params;
+  try {
+    const cartItem = await prisma.cartItems.delete({
+      where: {
+        id: id,
+      },
+    });
+
+    res.status(200).send({
+      status: "Success",
+      message: "Success delete items",
+      data: {
+        cartItem,
+      },
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(500).send({
+      status: "Failed",
+      message: "Server Error",
+    });
+  }
+};

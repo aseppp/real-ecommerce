@@ -71,11 +71,23 @@ exports.getCartUser = async (req, res) => {
       },
     });
 
+    const cartItems = await prisma.cartItems.findMany({
+      where: {
+        cart: {
+          userId: userId,
+        },
+      },
+      include: {
+        product: true,
+      },
+    });
+
     res.status(200).send({
       status: "Success",
       message: "Success get cart user",
       data: {
         cart,
+        cartItems,
       },
     });
   } catch (error) {

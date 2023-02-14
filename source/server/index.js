@@ -7,6 +7,8 @@ app.use(express.json());
 const router = require("./routes/index");
 app.use("/api", router);
 
+app.use("/uploads", express.static("uploads"));
+
 app.get("/", (req, res) => {
   res.json("Server Running properly");
 });

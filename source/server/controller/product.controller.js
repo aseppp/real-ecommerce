@@ -1,15 +1,10 @@
 const { PrismaClient } = require("@prisma/client");
 const prisma = new PrismaClient();
+const cloudinary = require("../utils/cloudinary.conf");
 
 exports.createProduct = async (req, res) => {
-  const {
-    product_name,
-    product_price,
-    product_image,
-    product_stock,
-    product_variant,
-    email,
-  } = req.body;
+  const { product_name, product_price, product_stock, product_variant, email } =
+    req.body;
 
   try {
     const existProduct = await prisma.products.findUnique({
@@ -24,10 +19,16 @@ exports.createProduct = async (req, res) => {
         message: "Product already exist",
       });
     } else {
+      const picture = await cloudinary.uploader.upload(req.file.path, {
+        folder: "real-ecommerce",
+        use_filename: true,
+        unique_filename: true,
+      });
+
       const productData = await prisma.products.create({
         data: {
           product_name: product_name,
-          product_image: product_image,
+          product_image: picture.public_id,
           product_price: product_price,
           product_variant: product_variant,
           product_stock: product_stock,
