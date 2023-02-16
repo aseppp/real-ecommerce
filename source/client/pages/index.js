@@ -1,3 +1,4 @@
+import CardProduct from "@/components/CardProduct";
 import Searchbox from "@/components/Searchbox";
 import Head from "next/head";
 
@@ -12,8 +13,14 @@ export default function Home() {
       </Head>
 
       <main className="md:w-1/2 m-auto">
-        <div className="my-10">
+        <div className="mx-2 my-5 md:my-6">
           <Searchbox />
+        </div>
+
+        <div>
+          <div className="mx-2 my-5 md:my-6">
+            <CardProduct />
+          </div>
         </div>
       </main>
     </>

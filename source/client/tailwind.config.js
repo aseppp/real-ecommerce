@@ -10,15 +10,19 @@ module.exports = {
   ],
   theme: {
     extend: {
+      maxWidth: {
+        xxs: "15rem",
+        base: "12rem",
+      },
       boxShadow: {
         bottom: "0px 15px 10px -12px rgb(0 0 0 / 0.25)",
       },
       fontFamily: {
-        sans: ["var(--font-poppins)", ...fontFamily.sans],
+        sans: ["var(--font-inter)", ...fontFamily.sans],
       },
       colors: {
-        darkBg: "#1d1d1d",
-        darkFg: "#1f1f1f",
+        darkBg: "#222223",
+        darkFg: "#1c1c1c",
       },
     },
   },
