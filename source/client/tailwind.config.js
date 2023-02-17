@@ -12,7 +12,7 @@ module.exports = {
     extend: {
       maxWidth: {
         xxs: "15rem",
-        base: "12rem",
+        base: "10rem",
       },
       boxShadow: {
         bottom: "0px 15px 10px -12px rgb(0 0 0 / 0.25)",
@@ -23,6 +23,7 @@ module.exports = {
       colors: {
         darkBg: "#222223",
         darkFg: "#1c1c1c",
+        darkCard: "#272727",
       },
     },
   },

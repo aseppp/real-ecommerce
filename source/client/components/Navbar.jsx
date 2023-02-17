@@ -61,9 +61,6 @@ const Navbar = () => {
           <div className="flex items-center divide-x-[2px] gap-3 divide-gray-400">
             <div className="flex gap-3">
               <Link href="#">
-                <p className="text-sm md:text-md">Products</p>
-              </Link>
-              <Link href="#">
                 <p className="text-sm md:text-md">Wishlist</p>
               </Link>
               <Link href="/profile">
