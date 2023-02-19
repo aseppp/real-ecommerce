@@ -15,18 +15,14 @@ export const authSignUp = createAsyncThunk(
   "auth/signUp",
   async (initialState, { rejectWithValue }) => {
     try {
-      const response = await axios.post(
+      const response = await service.post(
         `${endpoint.BASE_URL}/signUp`,
         initialState
       );
-      // const response = await axios.post(
-      //   "http://localhost:5000/api/signUp",
-      //   initialState
-      // );
 
       return response.data;
     } catch (error) {
-      console.log(endpoint.BASE_URL);
+      console.log(process.env.DATABASE_URL);
       return rejectWithValue(error.response.data);
     }
   }
@@ -36,11 +32,7 @@ export const authSignIn = createAsyncThunk(
   "auth/signIn",
   async (initialState, { rejectWithValue }) => {
     try {
-      // const response = await axios.post(
-      //   "https://motionless-neckerchief-eel.cyclic.app/api/signIn",
-      //   initialState
-      // );
-      const response = await axios.post(
+      const response = await service.post(
         `${endpoint.BASE_URL}/signIn`,
         initialState
       );
