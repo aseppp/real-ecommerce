@@ -1,19 +1,22 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Head from "next/head";
 import { useDispatch, useSelector } from "react-redux";
 import { useForm } from "react-hook-form";
-import { authSignIn, authSignUp } from "@/redux/features/auth/authSlice";
+import { authSignIn, authSignUp, login } from "@/redux/features/auth/authSlice";
+import { useRouter } from "next/router";
 
 const Auth = () => {
+  const router = useRouter();
   const dispatch = useDispatch();
   const [showLogin, setShowLogin] = useState(true);
   const auth = useSelector((state) => state.auth);
-  const { register, watch, handleSubmit } = useForm();
   console.log(auth);
+
+  const { register, watch, handleSubmit } = useForm();
 
   const onSubmit = () => {
     const data = {
-      username: watch("username"),
+      name: watch("username"),
       email: watch("email"),
       password: watch("password"),
     };
@@ -24,6 +27,67 @@ const Auth = () => {
       dispatch(authSignUp(data));
     }
   };
+
+  const alert = () => {
+    if (auth.isAdd) {
+      return (
+        <div
+          className="p-4 mb-4 text-sm text-green-800 rounded-lg bg-green-50 dark:bg-gray-800 dark:text-green-400"
+          role="alert"
+        >
+          <span className="font-medium">Register success, please login!</span>
+        </div>
+      );
+    }
+
+    if (auth.isLogin === "false") {
+      return (
+        <div
+          className="p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400"
+          role="alert"
+        >
+          <span className="font-medium">Error</span> {auth.message}
+        </div>
+      );
+    }
+
+    if (auth.isLogin === "true") {
+      return (
+        <div
+          className="p-4 mb-4 text-sm text-green-800 rounded-lg bg-green-50 dark:bg-gray-800 dark:text-green-400"
+          role="alert"
+        >
+          <span className="font-medium  animate-pulse">
+            Login success, redirecting!
+          </span>
+        </div>
+      );
+    }
+  };
+
+  const togleShowLogin = () => {
+    if (showLogin) {
+      return (
+        <div>
+          <span>Register</span>
+        </div>
+      );
+    } else {
+      return (
+        <div>
+          <span>Login</span>
+        </div>
+      );
+    }
+  };
+
+  useEffect(() => {
+    if (auth.isLogin === "true") {
+      setTimeout(() => {
+        router.push("/");
+      }, 3000);
+    }
+  }, [auth.isLogin]);
 
   return (
     <>
@@ -43,6 +107,7 @@ const Auth = () => {
           </div>
 
           <div>
+            {alert()}
             <form
               className="flex flex-col gap-3"
               onSubmit={handleSubmit(onSubmit)}
@@ -101,9 +166,11 @@ const Auth = () => {
                   Create account ?{" "}
                   <button
                     type="button"
-                    onClick={() => setShowLogin(!showLogin)}
+                    onClick={() => {
+                      setShowLogin(!showLogin), dispatch(login());
+                    }}
                   >
-                    <p className="font-bold">Register</p>
+                    <div className="font-bold">{togleShowLogin()}</div>
                   </button>
                 </p>
               </div>

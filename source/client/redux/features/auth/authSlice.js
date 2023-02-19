@@ -1,7 +1,7 @@
+import { setToken } from "@/utils";
 import service from "@/utils/service";
 import endpoint from "@/utils/url";
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import axios from "axios";
 
 const initialState = {
   loading: null,
@@ -9,6 +9,7 @@ const initialState = {
   status: null,
   message: null,
   isLogin: "",
+  isAdd: null,
 };
 
 export const authSignUp = createAsyncThunk(
@@ -22,7 +23,6 @@ export const authSignUp = createAsyncThunk(
 
       return response.data;
     } catch (error) {
-      console.log(process.env.DATABASE_URL);
       return rejectWithValue(error.response.data);
     }
   }
@@ -46,6 +46,11 @@ export const authSignIn = createAsyncThunk(
 export const authSlice = createSlice({
   name: "auth",
   initialState,
+  reducers: {
+    login: (state) => {
+      state.isAdd = null;
+    },
+  },
   extraReducers: (builder) => {
     builder
       .addCase(authSignIn.pending, (state) => {
@@ -55,6 +60,7 @@ export const authSlice = createSlice({
         state.loading = false;
         state.data = action.payload;
         state.isLogin = "true";
+        setToken(state.data.user.token);
       })
       .addCase(authSignIn.rejected, (state, action) => {
         state.loading = false;
@@ -70,6 +76,7 @@ export const authSlice = createSlice({
         state.loading = false;
         state.data = action.payload;
         state.error = "";
+        state.isAdd = true;
       })
       .addCase(authSignUp.rejected, (state, action) => {
         state.loading = false;
@@ -79,5 +86,6 @@ export const authSlice = createSlice({
       });
   },
 });
+export const { login } = authSlice.actions;
 
 export default authSlice.reducer;
