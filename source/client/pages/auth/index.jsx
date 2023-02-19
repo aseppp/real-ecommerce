@@ -1,10 +1,29 @@
-import React from "react";
+import React, { useState } from "react";
 import Head from "next/head";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { useForm } from "react-hook-form";
+import { authSignIn, authSignUp } from "@/redux/features/auth/authSlice";
 
 const Auth = () => {
+  const dispatch = useDispatch();
+  const [showLogin, setShowLogin] = useState(true);
   const auth = useSelector((state) => state.auth);
+  const { register, watch, handleSubmit } = useForm();
   console.log(auth);
+
+  const onSubmit = () => {
+    const data = {
+      username: watch("username"),
+      email: watch("email"),
+      password: watch("password"),
+    };
+
+    if (showLogin) {
+      dispatch(authSignIn(data));
+    } else {
+      dispatch(authSignUp(data));
+    }
+  };
 
   return (
     <>
@@ -15,8 +34,82 @@ const Auth = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <div>
-        <h1>Hello world</h1>
+      <div className="flex justify-center items-center w-full h-h1">
+        <div className="bg-gray-50 dark:bg-darkCard w-96 py-8 px-6 rounded-lg shadow-bottom">
+          <div className="mb-5">
+            <h1 className="font-semibold text-lg md:text-2xl">
+              Login to your account!
+            </h1>
+          </div>
+
+          <div>
+            <form
+              className="flex flex-col gap-3"
+              onSubmit={handleSubmit(onSubmit)}
+            >
+              {showLogin ? null : (
+                <div className="flex flex-col gap-1">
+                  <label htmlFor="username" className="text-sm md:text-md">
+                    Username
+                  </label>
+                  <input
+                    {...register("username")}
+                    type="name"
+                    className="py-2 px-3 rounded-lg"
+                    placeholder="username"
+                    required
+                  />
+                </div>
+              )}
+              <div className="flex flex-col gap-1">
+                <label htmlFor="email" className="text-sm md:text-md">
+                  Email
+                </label>
+                <input
+                  {...register("email")}
+                  type="email"
+                  className="py-2 px-3 rounded-lg"
+                  placeholder="user@example.com"
+                  required
+                />
+              </div>
+
+              <div className="flex flex-col gap-1">
+                <label htmlFor="password" className="text-sm md:text-md">
+                  Password
+                </label>
+                <input
+                  {...register("password")}
+                  type="password"
+                  className="py-2 px-3 rounded-lg"
+                  placeholder="password"
+                  required
+                />
+              </div>
+
+              <div>
+                <button
+                  type="submit"
+                  className="w-full bg-darkFg p-2 rounded-lg"
+                >
+                  <p className="text-gray-50">Continue</p>
+                </button>
+              </div>
+
+              <div className="text-center">
+                <p className="text-sm">
+                  Create account ?{" "}
+                  <button
+                    type="button"
+                    onClick={() => setShowLogin(!showLogin)}
+                  >
+                    <p className="font-bold">Register</p>
+                  </button>
+                </p>
+              </div>
+            </form>
+          </div>
+        </div>
       </div>
     </>
   );

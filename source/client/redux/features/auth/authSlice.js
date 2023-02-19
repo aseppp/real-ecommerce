@@ -1,3 +1,5 @@
+import service from "@/utils/service";
+import endpoint from "@/utils/url";
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 
@@ -14,11 +16,17 @@ export const authSignUp = createAsyncThunk(
   async (initialState, { rejectWithValue }) => {
     try {
       const response = await axios.post(
-        "https://motionless-neckerchief-eel.cyclic.app/api/signIn",
+        `${endpoint.BASE_URL}/signUp`,
         initialState
       );
+      // const response = await axios.post(
+      //   "http://localhost:5000/api/signUp",
+      //   initialState
+      // );
+
       return response.data;
     } catch (error) {
+      console.log(endpoint.BASE_URL);
       return rejectWithValue(error.response.data);
     }
   }
@@ -28,8 +36,12 @@ export const authSignIn = createAsyncThunk(
   "auth/signIn",
   async (initialState, { rejectWithValue }) => {
     try {
+      // const response = await axios.post(
+      //   "https://motionless-neckerchief-eel.cyclic.app/api/signIn",
+      //   initialState
+      // );
       const response = await axios.post(
-        "https://motionless-neckerchief-eel.cyclic.app/api/signIn",
+        `${endpoint.BASE_URL}/signIn`,
         initialState
       );
       return response.data;
@@ -69,8 +81,9 @@ export const authSlice = createSlice({
       })
       .addCase(authSignUp.rejected, (state, action) => {
         state.loading = false;
-        state.data = "";
-        state.error = action.error.message;
+        state.status = action;
+        state.isLogin = "false";
+        state.message = action.payload;
       });
   },
 });

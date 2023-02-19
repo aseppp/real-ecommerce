@@ -18,7 +18,7 @@ export default function Home() {
         </div>
 
         <div>
-          <div className="bg-gray-50 dark:bg-darkCard shadow-bottom rounded-lg">
+          <div className="bg-gray-50 dark:bg-darkCard shadow-bottom rounded-lg m-2">
             <CardProduct />
           </div>
         </div>

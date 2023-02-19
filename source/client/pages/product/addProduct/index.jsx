@@ -43,7 +43,7 @@ const AddProduct = () => {
           <div className="mx-2 my-5 md:my-6">
             <div className="flex flex-col gap-2 ">
               <label htmlFor="productPrice" className="text-sm">
-                Product Price
+                Product Variant
               </label>
               <input
                 type="text"

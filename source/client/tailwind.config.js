@@ -23,7 +23,10 @@ module.exports = {
       colors: {
         darkBg: "#222223",
         darkFg: "#1c1c1c",
-        darkCard: "#272727",
+        darkCard: "#242424",
+      },
+      height: {
+        h1: "92vh",
       },
     },
   },

@@ -61,6 +61,18 @@ class Service {
       );
   }
 
+  postAuth(path, payload, callback) {
+    return this.service
+      .request({
+        method: "POST",
+        url: path,
+        responseType: "json",
+        data: payload,
+      })
+      .then((response) =>
+        callback ? callback(response.status, response.data) : response
+      );
+  }
   post(path, payload, callback) {
     return this.service
       .request({

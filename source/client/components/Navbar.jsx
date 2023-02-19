@@ -4,8 +4,10 @@ import { useTheme } from "next-themes";
 import Image from "next/image";
 import { FiMoon, FiSun } from "react-icons/fi";
 import { BsCart4 } from "react-icons/bs";
+import { useRouter } from "next/router";
 
 const Navbar = () => {
+  const router = useRouter();
   const [mounted, setMounted] = useState(false);
   const { systemTheme, theme, setTheme } = useTheme();
 
@@ -59,21 +61,25 @@ const Navbar = () => {
           </Link>
 
           <div className="flex items-center divide-x-[2px] gap-3 divide-gray-400">
-            <div className="flex gap-3">
-              <Link href="#">
-                <p className="text-sm md:text-md">Wishlist</p>
-              </Link>
-              <Link href="/profile">
-                <p className="text-sm md:text-md">Profile</p>
-              </Link>
-            </div>
+            {router.pathname === "/auth" ? null : (
+              <div className="flex gap-3">
+                <Link href="#">
+                  <p className="text-sm md:text-md">Wishlist</p>
+                </Link>
+                <Link href="/profile">
+                  <p className="text-sm md:text-md">Profile</p>
+                </Link>
+              </div>
+            )}
 
             <div className="flex">
-              <Link href="/cart" className="mx-2">
-                <div>
-                  <BsCart4 size="20px" />
-                </div>
-              </Link>
+              {router.pathname === "/auth" ? null : (
+                <Link href="/cart" className="mx-2">
+                  <div>
+                    <BsCart4 size="20px" />
+                  </div>
+                </Link>
+              )}
 
               <div className="mr-1 flex items-center justify-center">
                 {toggleDarkMode()}
