@@ -5,7 +5,7 @@ import { BsCart4 } from "react-icons/bs";
 const CardProduct = () => {
   return (
     <>
-      <div className="grid gap-y-8 grid-cols-2 grid-rows-3 place-items-center md:grid-cols-4 md:grid-rows-2 py-5">
+      <div className="grid gap-y-8 place-items-center grid-cols-2 grid-rows-3 sm:grid-cols-3 sm:grid-row-3 md:grid-cols-4 md:grid-rows-2 py-5">
         <div className="max-w-base md:max-w-xxs bg-white rounded-lg shadow dark:bg-darkBg dark:border-gray-700 shadow-bottom">
           <img className="rounded-t-lg h-64 " src="/phone.jpeg" alt="" />
 

@@ -3,6 +3,7 @@ import Link from "next/link";
 import { useTheme } from "next-themes";
 import Image from "next/image";
 import { FiMoon, FiSun } from "react-icons/fi";
+import { HiOutlineLogout } from "react-icons/hi";
 import { BsCart4 } from "react-icons/bs";
 import { useRouter } from "next/router";
 
@@ -74,11 +75,17 @@ const Navbar = () => {
 
             <div className="flex">
               {router.pathname === "/auth" ? null : (
-                <Link href="/cart" className="mx-2">
-                  <div>
-                    <BsCart4 size="20px" />
-                  </div>
-                </Link>
+                <div className="flex items-center gap-1 mx-2">
+                  <Link href="/cart">
+                    <div>
+                      <BsCart4 size="20px" />
+                    </div>
+                  </Link>
+
+                  <button>
+                    <HiOutlineLogout size="20px" />
+                  </button>
+                </div>
               )}
 
               <div className="mr-1 flex items-center justify-center">

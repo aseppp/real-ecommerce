@@ -10,7 +10,6 @@ const Auth = () => {
   const dispatch = useDispatch();
   const [showLogin, setShowLogin] = useState(true);
   const auth = useSelector((state) => state.auth);
-  console.log(auth);
 
   const { register, watch, handleSubmit } = useForm();
 

@@ -2,4 +2,10 @@ const setToken = (token) => {
   return localStorage.setItem("token", JSON.stringify(token));
 };
 
-export { setToken };
+const getToken = () => {
+  if (typeof window !== "undefined") {
+    return localStorage.getItem("token");
+  }
+};
+
+export { setToken, getToken };
