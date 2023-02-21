@@ -1,13 +1,12 @@
 import axios from "axios";
+import { getToken } from ".";
 
 class Service {
   constructor() {
     let service = axios.create();
     service.interceptors.response.use(this.handleSuccess, this.handleError);
     this.service = service;
-    if (typeof window !== "undefined") {
-      this.token = localStorage.getItem("token");
-    }
+    this.token = getToken();
   }
 
   handleSuccess(response) {
@@ -37,7 +36,7 @@ class Service {
       .get(path, {
         params,
         headers: {
-          Authorization: `${this.token}`,
+          Authorization: `Bearer ${this.token}`,
         },
       })
       .then((response) =>
@@ -53,7 +52,7 @@ class Service {
         responseType: "json",
         data: payload,
         headers: {
-          Authorization: `${this.token}`,
+          Authorization: `Bearer ${this.token}`,
         },
       })
       .then((response) =>
@@ -81,7 +80,7 @@ class Service {
         responseType: "json",
         data: payload,
         headers: {
-          Authorization: `${this.token}`,
+          Authorization: `Bearer ${this.token}`,
         },
       })
       .then((response) =>
@@ -98,7 +97,7 @@ class Service {
         data: payload,
         headers: {
           "x-private": "false",
-          Authorization: `${this.token}`,
+          Authorization: `Bearer ${this.token}`,
           "Content-Type": "multipart/form-data",
         },
       })
@@ -115,7 +114,7 @@ class Service {
         responseType: "json",
         data: payload,
         headers: {
-          Authorization: `${this.token}`,
+          Authorization: `Bearer ${this.token}`,
         },
       })
       .then((response) =>

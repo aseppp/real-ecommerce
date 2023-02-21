@@ -12,7 +12,7 @@ module.exports = {
     extend: {
       maxWidth: {
         xxs: "15rem",
-        base: "10rem",
+        base: "11rem",
       },
       boxShadow: {
         bottom: "0px 15px 10px -12px rgb(0 0 0 / 0.25)",

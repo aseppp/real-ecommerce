@@ -3,7 +3,7 @@ import Link from "next/link";
 import { useTheme } from "next-themes";
 import Image from "next/image";
 import { FiMoon, FiSun } from "react-icons/fi";
-import { HiOutlineLogout } from "react-icons/hi";
+// import { HiOutlineLogout } from "react-icons/hi";
 import { BsCart4 } from "react-icons/bs";
 import { useRouter } from "next/router";
 
@@ -64,9 +64,9 @@ const Navbar = () => {
           <div className="flex items-center divide-x-[2px] gap-3 divide-gray-400">
             {router.pathname === "/auth" ? null : (
               <div className="flex gap-3">
-                <Link href="#">
+                {/* <Link href="#">
                   <p className="text-sm md:text-md">Wishlist</p>
-                </Link>
+                </Link> */}
                 <Link href="/profile">
                   <p className="text-sm md:text-md">Profile</p>
                 </Link>
@@ -82,9 +82,9 @@ const Navbar = () => {
                     </div>
                   </Link>
 
-                  <button>
+                  {/* <button>
                     <HiOutlineLogout size="20px" />
-                  </button>
+                  </button> */}
                 </div>
               )}
 

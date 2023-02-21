@@ -1,8 +1,18 @@
 import CardProduct from "@/components/CardProduct";
 import Searchbox from "@/components/Searchbox";
+import { products } from "@/redux/features/actions/products";
 import Head from "next/head";
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 
 export default function Home() {
+  const dispatch = useDispatch();
+  const product = useSelector((state) => state.product);
+  const productData = product?.data?.data?.products;
+
+  useEffect(() => {
+    dispatch(products());
+  }, []);
   return (
     <>
       <Head>
@@ -19,7 +29,7 @@ export default function Home() {
 
         <div>
           <div className="bg-gray-50 dark:bg-darkCard shadow-bottom rounded-lg m-2">
-            <CardProduct />
+            <CardProduct data={productData} />
           </div>
         </div>
       </main>
