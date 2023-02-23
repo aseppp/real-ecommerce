@@ -89,7 +89,6 @@ class Service {
   }
 
   postMultipart(path, payload, callback) {
-    console.log(payload);
     return this.service
       .request({
         method: "POST",

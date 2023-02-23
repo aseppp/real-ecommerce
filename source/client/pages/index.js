@@ -13,6 +13,7 @@ export default function Home() {
   useEffect(() => {
     dispatch(products());
   }, []);
+
   return (
     <>
       <Head>
@@ -28,9 +29,7 @@ export default function Home() {
         </div>
 
         <div>
-          <div className="bg-gray-50 dark:bg-darkCard shadow-bottom rounded-lg m-2">
-            <CardProduct data={productData} />
-          </div>
+          <CardProduct data={productData} />
         </div>
       </main>
     </>

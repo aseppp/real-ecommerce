@@ -26,7 +26,7 @@ module.exports = {
         darkCard: "#242424",
       },
       height: {
-        h1: "92vh",
+        h1: "93vh",
       },
     },
   },

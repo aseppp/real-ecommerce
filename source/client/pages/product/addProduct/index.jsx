@@ -1,4 +1,5 @@
 import { createProduct } from "@/redux/features/actions/products";
+import { getUser } from "@/utils";
 import Head from "next/head";
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
@@ -9,6 +10,7 @@ const AddProduct = () => {
   const product = useSelector((state) => state.product);
   const [variant, setVariant] = useState([]);
   const { watch, register, handleSubmit } = useForm();
+  console.log(variant);
 
   const removeVariant = (indexToRemove) => {
     setVariant([...variant.filter((_, index) => index !== indexToRemove)]);
@@ -32,6 +34,17 @@ const AddProduct = () => {
       );
     }
 
+    if (product.loading) {
+      return (
+        <div
+          className="p-4 mb-4 text-sm text-yellow-800 rounded-lg bg-yellow-50 dark:bg-gray-800 dark:text-yellow-300"
+          role="alert"
+        >
+          <span className="font-medium">Loading</span>
+        </div>
+      );
+    }
+
     if (product.isAdd === false) {
       return (
         <div
@@ -46,14 +59,15 @@ const AddProduct = () => {
 
   const onSubmit = () => {
     const data = new FormData();
-    data.set("product_name", watch("product_name"));
-    data.set("product_price", watch("product_price"));
-    data.set("product_variant", variant);
-    data.set("product_stock", watch("product_stock"));
-    data.set("email", "user@mail.com");
-    data.set("product_image", watch("product_image")[0]);
+    data.append("product_name", watch("product_name"));
+    data.append("product_price", watch("product_price"));
+    data.append("product_variant", JSON.stringify(variant));
+    data.append("product_stock", watch("product_stock"));
+    data.append("email", getUser());
+    data.append("product_image", watch("product_image")[0]);
 
     dispatch(createProduct(data));
+    // console.log(data.get);
   };
 
   return (
@@ -67,7 +81,7 @@ const AddProduct = () => {
       </div>
 
       <div className="p-2">
-        <div>{alert()}</div>
+        <div className="md:w-1/2 m-auto">{alert()}</div>
         <form onSubmit={handleSubmit(onSubmit)}>
           <div className="md:w-1/2 m-auto shadow-bottom bg-gray-100 dark:bg-darkBg rounded-lg p-1">
             <div className="mx-2 my-5 md:my-6">
