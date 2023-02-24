@@ -4,12 +4,14 @@ import { useDispatch, useSelector } from "react-redux";
 import { useForm } from "react-hook-form";
 import { authSignIn, authSignUp, login } from "@/redux/features/auth/authSlice";
 import { useRouter } from "next/router";
+import { createCart } from "@/redux/features/actions/cart";
 
 const Auth = () => {
   const router = useRouter();
   const dispatch = useDispatch();
   const [showLogin, setShowLogin] = useState(true);
   const auth = useSelector((state) => state.auth);
+  console.log(auth);
 
   const { register, watch, handleSubmit } = useForm();
 
@@ -85,6 +87,7 @@ const Auth = () => {
       setTimeout(() => {
         router.push("/");
       }, 3000);
+      dispatch(createCart({ email: auth?.data?.user?.user?.email }));
     }
   }, [auth.isLogin]);
 

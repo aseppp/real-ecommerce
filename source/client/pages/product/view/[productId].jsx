@@ -1,54 +1,25 @@
-// import { detailProduct } from "@/redux/features/actions/products";
 import { formatMoney } from "@/utils";
 import endpoint from "@/utils/url";
 import Head from "next/head";
 import { useRouter } from "next/router";
 import React from "react";
-// import { useDispatch, useSelector } from "react-redux";
 import { BsCart4 } from "react-icons/bs";
 import { IoMdArrowRoundBack } from "react-icons/io";
 import useSwr from "swr";
 
 const ProductView = () => {
-  // const dispatch = useDispatch();
   const router = useRouter();
-  // const product = useSelector((state) => state.product);
-  // const detailsProduct = product?.data?.data?.product;
-  // const [variant, setVariant] = useState([]);
-  // console.log(detailsProduct);
-  // console.log(variant);
-
-  // useEffect(() => {
-  //   dispatch(detailProduct(router.query.productId));
-  // }, [router.query]);
-
-  // useEffect(() => {
-  //   if (detailsProduct?.data !== null) {
-  //     setVariant(JSON.parse(detailsProduct?.product_variant[0]));
-  //   }
-  // }, [product.data]);
 
   const fetcher = (...args) => fetch(...args).then((res) => res.json());
-  const { data, error } = useSwr(
+  const { data } = useSwr(
     `${endpoint.BASE_URL}/product/${router.query.productId}`,
     fetcher
   );
 
   const detailsProduct = data?.data?.product;
-  // const variant = JSON.parse(detailsProduct?.product_variant);
-  console.log(data);
-
-  if (error) return <div>Failed to load</div>;
-  if (!data) {
-    return (
-      <div>
-        <h1>Loading</h1>
-      </div>
-    );
-  }
 
   const variant = () => {
-    if (data.status === "success") {
+    if (data?.status === "success") {
       return (
         <>
           {data.data?.product &&
@@ -63,7 +34,7 @@ const ProductView = () => {
                     type="radio"
                     value=""
                     name="list-radio"
-                    className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500"
+                    className="w-4 h-4 text-blue-600 "
                   />
                   <label
                     htmlFor="horizontal-list-radio-license"
@@ -76,8 +47,6 @@ const ProductView = () => {
             ))}
         </>
       );
-    } else {
-      return;
     }
   };
 
@@ -90,8 +59,8 @@ const ProductView = () => {
         <link rel="icon" href="/logo.png" />
       </Head>
 
-      <div className="p-2 md:w-1/2 m-auto h-h1">
-        <div className="mb-5">
+      <div className="p-2 md:w-1/2 m-auto h-h2">
+        <div className="my-3">
           <button
             onClick={() => router.back()}
             className="flex items-center gap-1"
@@ -112,7 +81,7 @@ const ProductView = () => {
             />
           </div>
 
-          <div className="px-2 mt-16  ">
+          <div className="px-2 md:mt-16 mt-2">
             <h5 className="text-xl md:text-xl tracking-tight text-gray-900 dark:text-white">
               {detailsProduct?.product_name}
             </h5>
@@ -173,31 +142,9 @@ const ProductView = () => {
             </div>
           </div>
 
-          <div className="my-5">
-            <ul className="items-center w-full text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-lg sm:flex dark:bg-darkBg dark:border-gray-600 dark:text-white">
+          <div className="my-3">
+            <ul className="items-center w-full text-sm font-medium text-gray-900 bg-gray-100 border border-gray-200 rounded-lg sm:flex dark:bg-darkBg dark:border-gray-600 dark:text-white">
               {variant()}
-              {/* {variant?.map((item, key) => (
-                <li
-                  key={key}
-                  className="w-full border-b border-gray-200 sm:border-b-0 sm:border-r dark:border-gray-600"
-                >
-                  <div className="flex items-center pl-3">
-                    <input
-                      id="horizontal-list-radio-license"
-                      type="radio"
-                      value=""
-                      name="list-radio"
-                      className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500"
-                    />
-                    <label
-                      htmlFor="horizontal-list-radio-license"
-                      className="w-full py-3 ml-2 text-sm font-medium text-gray-900 dark:text-gray-300"
-                    >
-                      {item}
-                    </label>
-                  </div>
-                </li>
-              ))} */}
             </ul>
           </div>
 

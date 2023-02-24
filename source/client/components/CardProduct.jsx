@@ -7,12 +7,12 @@ const CardProduct = ({ data }) => {
   if (data !== null) {
     return (
       <>
-        <div className="grid md:p-2 gap-y-8 md:gap-3 place-items-center grid-cols-2 grid-rows-3 sm:grid-cols-3 sm:grid-row-3 md:grid-cols-4 md:grid-rows-2 py-5">
+        <div className="grid md:p-2 gap-y-8 md:gap-3 place-items-center grid-cols-2 sm:grid-cols-3 sm:grid-row-3 md:grid-cols-4 py-5">
           {data &&
             data.map((item, key) => (
               <div
                 key={key}
-                className="max-w-base md:max-w-xxs bg-white rounded-lg shadow dark:bg-darkBg dark:border-gray-700 shadow-bottom"
+                className="max-w-base md:max-w-xxs bg-white rounded-lg shadow dark:bg-darkCard dark:border-gray-700 shadow-bottom"
               >
                 <img
                   className="rounded-t-lg h-64 object-contain "

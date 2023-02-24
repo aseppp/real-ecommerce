@@ -10,7 +10,6 @@ const AddProduct = () => {
   const product = useSelector((state) => state.product);
   const [variant, setVariant] = useState([]);
   const { watch, register, handleSubmit } = useForm();
-  console.log(variant);
 
   const removeVariant = (indexToRemove) => {
     setVariant([...variant.filter((_, index) => index !== indexToRemove)]);
